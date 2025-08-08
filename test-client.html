@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"></head>
+<body>
+  <h3>Socket.IO Test</h3>
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script>
+    const s = io('https://shiny-goldfish-r4645v74gpgp255j-3000.app.github.dev', { transports: ['websocket'] });
+    s.on('connect', () => {
+      console.log('Connected:', s.id);
+      s.emit('subscribe_match', 'demo');
+    });
+    s.on('odds_update', data => {
+      console.log('odds_update', data);
+      const p = document.createElement('pre');
+      p.textContent = JSON.stringify(data, null, 2);
+      document.body.appendChild(p);
+    });
+  </script>
+</body>
+</html>
